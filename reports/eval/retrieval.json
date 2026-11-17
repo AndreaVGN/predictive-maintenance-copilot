@@ -1,0 +1,300 @@
+{
+  "summary": {
+    "n_questions": 25,
+    "hit@1": 0.84,
+    "hit@4": 0.96,
+    "mrr": 0.893,
+    "embedding_model": "nomic-embed-text",
+    "chunk_size": 900
+  },
+  "misses": [
+    {
+      "question": "Cosa controllare se la macchina si surriscalda a bassa velocità?",
+      "expected": "02_hdf_dissipazione_termica.md",
+      "retrieved": [
+        "04_osf_sovraccarico.md",
+        "01_twf_usura_utensile.md",
+        "00_panoramica_impianto.md",
+        "04_osf_sovraccarico.md"
+      ],
+      "rank": null
+    }
+  ],
+  "details": [
+    {
+      "question": "Dopo quanti minuti di utilizzo l'utensile arriva a fine vita?",
+      "expected": "01_twf_usura_utensile.md",
+      "retrieved": [
+        "01_twf_usura_utensile.md",
+        "01_twf_usura_utensile.md",
+        "00_panoramica_impianto.md",
+        "00_panoramica_impianto.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Come si sostituisce l'utensile della fresatrice?",
+      "expected": "01_twf_usura_utensile.md",
+      "retrieved": [
+        "01_twf_usura_utensile.md",
+        "01_twf_usura_utensile.md",
+        "01_twf_usura_utensile.md",
+        "01_twf_usura_utensile.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Quali sono i segnali che l'utensile si sta consumando?",
+      "expected": "01_twf_usura_utensile.md",
+      "retrieved": [
+        "01_twf_usura_utensile.md",
+        "01_twf_usura_utensile.md",
+        "01_twf_usura_utensile.md",
+        "06_sicurezza_loto.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Ogni quanto controllare l'usura sulle macchine di tipo H?",
+      "expected": "01_twf_usura_utensile.md",
+      "retrieved": [
+        "00_panoramica_impianto.md",
+        "04_osf_sovraccarico.md",
+        "01_twf_usura_utensile.md",
+        "06_sicurezza_loto.md"
+      ],
+      "rank": 3
+    },
+    {
+      "question": "Quando avviene il guasto per dissipazione termica?",
+      "expected": "02_hdf_dissipazione_termica.md",
+      "retrieved": [
+        "02_hdf_dissipazione_termica.md",
+        "02_hdf_dissipazione_termica.md",
+        "00_panoramica_impianto.md",
+        "02_hdf_dissipazione_termica.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Cosa controllare se la macchina si surriscalda a bassa velocità?",
+      "expected": "02_hdf_dissipazione_termica.md",
+      "retrieved": [
+        "04_osf_sovraccarico.md",
+        "01_twf_usura_utensile.md",
+        "00_panoramica_impianto.md",
+        "04_osf_sovraccarico.md"
+      ],
+      "rank": null
+    },
+    {
+      "question": "Come si pulisce lo scambiatore di calore e la ventola?",
+      "expected": "02_hdf_dissipazione_termica.md",
+      "retrieved": [
+        "02_hdf_dissipazione_termica.md",
+        "00_panoramica_impianto.md",
+        "06_sicurezza_loto.md",
+        "02_hdf_dissipazione_termica.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Il delta termico è sotto 8,6 K, che intervento fare?",
+      "expected": "02_hdf_dissipazione_termica.md",
+      "retrieved": [
+        "02_hdf_dissipazione_termica.md",
+        "00_panoramica_impianto.md",
+        "02_hdf_dissipazione_termica.md",
+        "00_panoramica_impianto.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Qual è la finestra di potenza ammessa dall'azionamento?",
+      "expected": "03_pwf_potenza.md",
+      "retrieved": [
+        "06_sicurezza_loto.md",
+        "03_pwf_potenza.md",
+        "03_pwf_potenza.md",
+        "03_pwf_potenza.md"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "Come si calcola la potenza meccanica da coppia e giri?",
+      "expected": "03_pwf_potenza.md",
+      "retrieved": [
+        "03_pwf_potenza.md",
+        "03_pwf_potenza.md",
+        "00_panoramica_impianto.md",
+        "03_pwf_potenza.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "La potenza è troppo bassa durante la finitura, perché?",
+      "expected": "03_pwf_potenza.md",
+      "retrieved": [
+        "03_pwf_potenza.md",
+        "03_pwf_potenza.md",
+        "03_pwf_potenza.md",
+        "03_pwf_potenza.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Serve il tecnico elettrico per tarare l'inverter del mandrino?",
+      "expected": "03_pwf_potenza.md",
+      "retrieved": [
+        "06_sicurezza_loto.md",
+        "03_pwf_potenza.md",
+        "03_pwf_potenza.md",
+        "00_panoramica_impianto.md"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "Qual è il limite di usura per coppia sulle macchine di tipo M?",
+      "expected": "04_osf_sovraccarico.md",
+      "retrieved": [
+        "04_osf_sovraccarico.md",
+        "00_panoramica_impianto.md",
+        "00_panoramica_impianto.md",
+        "04_osf_sovraccarico.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Che differenza c'è tra overstrain e usura utensile?",
+      "expected": "04_osf_sovraccarico.md",
+      "retrieved": [
+        "04_osf_sovraccarico.md",
+        "04_osf_sovraccarico.md",
+        "04_osf_sovraccarico.md",
+        "01_twf_usura_utensile.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Come ridurre il carico di taglio per evitare il sovraccarico?",
+      "expected": "04_osf_sovraccarico.md",
+      "retrieved": [
+        "04_osf_sovraccarico.md",
+        "04_osf_sovraccarico.md",
+        "01_twf_usura_utensile.md",
+        "04_osf_sovraccarico.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Cosa sono i guasti casuali e si possono prevedere?",
+      "expected": "05_rnf_guasti_casuali.md",
+      "retrieved": [
+        "05_rnf_guasti_casuali.md",
+        "05_rnf_guasti_casuali.md",
+        "07_procedura_ordini_lavoro.md",
+        "05_rnf_guasti_casuali.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Checklist di ispezione dopo un guasto senza causa evidente",
+      "expected": "05_rnf_guasti_casuali.md",
+      "retrieved": [
+        "05_rnf_guasti_casuali.md",
+        "03_pwf_potenza.md",
+        "02_hdf_dissipazione_termica.md",
+        "01_twf_usura_utensile.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Come si mette in sicurezza la macchina con lucchetto e cartellino?",
+      "expected": "06_sicurezza_loto.md",
+      "retrieved": [
+        "06_sicurezza_loto.md",
+        "00_panoramica_impianto.md",
+        "06_sicurezza_loto.md",
+        "04_osf_sovraccarico.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Quali DPI servono per la manutenzione dopo un guasto termico?",
+      "expected": "06_sicurezza_loto.md",
+      "retrieved": [
+        "06_sicurezza_loto.md",
+        "02_hdf_dissipazione_termica.md",
+        "02_hdf_dissipazione_termica.md",
+        "04_osf_sovraccarico.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Chi è abilitato a intervenire sui quadri elettrici?",
+      "expected": "06_sicurezza_loto.md",
+      "retrieved": [
+        "06_sicurezza_loto.md",
+        "03_pwf_potenza.md",
+        "06_sicurezza_loto.md",
+        "06_sicurezza_loto.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Quando si deve aprire un ordine di lavoro?",
+      "expected": "07_procedura_ordini_lavoro.md",
+      "retrieved": [
+        "07_procedura_ordini_lavoro.md",
+        "07_procedura_ordini_lavoro.md",
+        "07_procedura_ordini_lavoro.md",
+        "07_procedura_ordini_lavoro.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Entro quanto tempo va presa in carico una priorità P1?",
+      "expected": "07_procedura_ordini_lavoro.md",
+      "retrieved": [
+        "07_procedura_ordini_lavoro.md",
+        "07_procedura_ordini_lavoro.md",
+        "00_panoramica_impianto.md",
+        "00_panoramica_impianto.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Chi approva gli ordini proposti dall'assistente digitale?",
+      "expected": "07_procedura_ordini_lavoro.md",
+      "retrieved": [
+        "07_procedura_ordini_lavoro.md",
+        "06_sicurezza_loto.md",
+        "07_procedura_ordini_lavoro.md",
+        "07_procedura_ordini_lavoro.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Quante linee produttive ci sono e quali qualità lavorano?",
+      "expected": "00_panoramica_impianto.md",
+      "retrieved": [
+        "00_panoramica_impianto.md",
+        "07_procedura_ordini_lavoro.md",
+        "07_procedura_ordini_lavoro.md",
+        "07_procedura_ordini_lavoro.md"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Quali variabili registra il sistema di acquisizione?",
+      "expected": "00_panoramica_impianto.md",
+      "retrieved": [
+        "00_panoramica_impianto.md",
+        "06_sicurezza_loto.md",
+        "05_rnf_guasti_casuali.md",
+        "00_panoramica_impianto.md"
+      ],
+      "rank": 1
+    }
+  ]
+}

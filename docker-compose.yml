@@ -1,0 +1,44 @@
+# =============================================================================
+# docker-compose.yml — API in container, Ollama sul Mac.
+#   make setup          (una volta, sul Mac: crea dati, modello, indice)
+#   docker compose up --build
+# Langfuse (opzionale) si avvia a parte con il suo compose ufficiale:
+# vedi docs/08-observability.md.
+# =============================================================================
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Dal container, "localhost" è il container stesso: per raggiungere
+      # Ollama sul Mac si usa il nome speciale host.docker.internal.
+      PMC_OLLAMA_BASE_URL: http://host.docker.internal:11434
+      PMC_DATA_DIR: /app/data
+      PMC_ARTIFACTS_DIR: /app/artifacts
+      PMC_REPORTS_DIR: /app/reports
+      PMC_LOGS_DIR: /app/logs
+      # Il pacchetto è installato (non in modalità -e): indichiamo noi dove
+      # stanno manuali e golden set dentro l'immagine.
+      PMC_MANUALS_DIR: /app/data/manuals
+      PMC_EVAL_DIR: /app/eval
+      PMC_BACKUPS_DIR: /app/backups
+    volumes:
+      - ./data:/app/data
+      - ./artifacts:/app/artifacts   # scrivibile: riaddestramento e promozione dalla console
+      - ./reports:/app/reports
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # necessario su Linux, innocuo su Mac
+    restart: unless-stopped
+    # Docker considera il container "sano" solo se /health/live risponde.
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 30s
+      timeout: 5s
+      start_period: 40s
+      retries: 3

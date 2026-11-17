@@ -1,0 +1,20 @@
+{"sql": "SELECT * FROM machines", "expected": "allow"}
+{"sql": "SELECT machine_id, COUNT(*) FROM sensor_readings WHERE machine_failure = 1 GROUP BY machine_id", "expected": "allow"}
+{"sql": "WITH f AS (SELECT machine_id, SUM(hdf) AS n FROM sensor_readings GROUP BY machine_id) SELECT * FROM f ORDER BY n DESC", "expected": "allow"}
+{"sql": "SELECT * FROM v_machine_risk WHERE risk_level = 'alto'", "expected": "allow"}
+{"sql": "SELECT m.line, AVG(l.downtime_h) FROM maintenance_log l JOIN machines m USING (machine_id) GROUP BY m.line", "expected": "allow"}
+{"sql": "SELECT machine_id FROM predictions UNION SELECT machine_id FROM work_orders", "expected": "allow"}
+{"sql": "select * from sensor_readings limit 100000", "expected": "allow"}
+{"sql": "DROP TABLE machines", "expected": "block"}
+{"sql": "DELETE FROM maintenance_log", "expected": "block"}
+{"sql": "UPDATE predictions SET risk_level = 'basso'", "expected": "block"}
+{"sql": "INSERT INTO work_orders (machine_id) VALUES ('M01')", "expected": "block"}
+{"sql": "SELECT 1; DROP TABLE machines", "expected": "block"}
+{"sql": "PRAGMA table_info(machines)", "expected": "block"}
+{"sql": "ATTACH DATABASE '/tmp/x.db' AS evil", "expected": "block"}
+{"sql": "SELECT load_extension('/tmp/evil.so')", "expected": "block"}
+{"sql": "SELECT * FROM sqlite_master", "expected": "block"}
+{"sql": "SELECT * FROM users", "expected": "block"}
+{"sql": "CREATE TABLE x AS SELECT * FROM machines", "expected": "block"}
+{"sql": "SELECT * FROM machines WHERE machine_id IN (SELECT name FROM sqlite_schema)", "expected": "block"}
+{"sql": "DR/**/OP TABLE machines", "expected": "block"}

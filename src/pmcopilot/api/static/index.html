@@ -1,0 +1,213 @@
+<!doctype html>
+<!--
+  index.html — la console web di test del Copilota Manutenzione.
+
+  È una "single page application" senza framework: questo HTML contiene lo
+  scheletro delle viste, styles.css lo stile, e la logica è divisa in moduli
+  JavaScript (util.js, app.js, experiments.js, monitoring.js).
+  Tutti i dati arrivano dall'API FastAPI che serve anche questa pagina
+  (stesso indirizzo, quindi niente problemi di CORS).
+
+  ACCESSO
+    Finché non si accede, la console mostra solo il riquadro di login.
+    Le viste "Esperimenti" e "Monitoraggio" hanno data-admin: sono nascoste
+    agli operatori (e comunque l'API risponde 403 se le chiamassero).
+-->
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Copilota manutenzione</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%231D5C9E'/><circle cx='16' cy='16' r='6' fill='%23F2B705'/></svg>">
+</head>
+<body>
+<!-- ============================================================== login -->
+<div class="login" id="login" hidden>
+  <form class="login-card" id="login-form">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14"/><circle cx="16" cy="16" r="6"/></svg>
+      <div><strong>Copilota manutenzione</strong><span>Accesso alla console</span></div>
+    </div>
+    <label class="field"><span>Utente</span><input id="login-user" autocomplete="username" required value="admin"></label>
+    <label class="field"><span>Password</span><input id="login-pass" type="password" autocomplete="current-password" required></label>
+    <p class="error-box" id="login-error" hidden></p>
+    <button class="btn primary" type="submit">Accedi</button>
+    <p class="note">Utente predefinito <code>admin</code> / <code>admin</code>. Un secondo utente "operatore" (chat e consultazione, senza approvazioni) si attiva con PMC_OPERATOR_USER e PMC_OPERATOR_PASSWORD nel file .env.</p>
+  </form>
+</div>
+
+<div class="banner" id="default-pw-banner" hidden>
+  Stai usando la password predefinita <code>admin</code>. Va bene in locale; prima di esporre la console imposta <code>PMC_ADMIN_PASSWORD</code> nel file .env.
+</div>
+
+<div class="shell" id="shell" hidden>
+
+  <!-- =============================================================== rail -->
+  <nav class="rail" aria-label="Sezioni">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14"/><circle cx="16" cy="16" r="6"/></svg>
+      <div>
+        <strong>Copilota manutenzione</strong>
+        <span>Fresatrici serie PMX</span>
+      </div>
+    </div>
+    <ul class="nav">
+      <li><button data-view="copilot" aria-current="page"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Copilota</button></li>
+      <li><button data-view="predict"><svg viewBox="0 0 24 24"><path d="M4 18h16M6 15l4-5 3 3 5-7"/></svg>Previsione</button></li>
+      <li><button data-view="plant"><svg viewBox="0 0 24 24"><path d="M3 20V9l6 4V9l6 4V5h6v15z"/></svg>Impianto</button></li>
+      <li><button data-view="status"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Stato</button></li>
+      <li class="nav-group" data-admin>Amministrazione</li>
+      <li data-admin><button data-view="experiments"><svg viewBox="0 0 24 24"><path d="M9 3v6l-5 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 3h8"/></svg>Esperimenti</button></li>
+      <li data-admin><button data-view="monitoring"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>Monitoraggio</button></li>
+    </ul>
+    <div class="rail-status" id="rail-status" aria-live="polite"></div>
+    <div class="rail-user" id="rail-user"></div>
+  </nav>
+
+  <main>
+    <!-- =========================================================== copilota -->
+    <section class="view" id="view-copilot" aria-labelledby="h-copilot">
+      <header class="view-head">
+        <div>
+          <h1 id="h-copilot">Copilota</h1>
+          <p>Fai una domanda e osserva, passo per passo, cosa decide l'agente.</p>
+        </div>
+        <button class="btn ghost" id="new-thread">Nuova conversazione</button>
+      </header>
+
+      <div class="copilot">
+        <div class="conversation">
+          <div class="messages" id="messages" aria-live="polite">
+            <div class="empty" id="empty-chat">
+              <h2>Da dove vuoi partire?</h2>
+              <p>Ogni domanda mette alla prova un pezzo diverso del sistema.</p>
+              <div class="suggestions" id="suggestions"></div>
+            </div>
+          </div>
+          <form class="composer" id="composer">
+            <label for="question" class="sr-only">Domanda</label>
+            <textarea id="question" rows="2" placeholder="Scrivi una domanda sull'impianto…" maxlength="4000"></textarea>
+            <button class="btn primary" type="submit" id="send">Invia</button>
+          </form>
+          <div class="context-meter" id="context-meter" hidden>
+            <div class="context-bar" role="meter" aria-label="Finestra di contesto usata" aria-valuemin="0" aria-valuemax="100" id="context-bar"><div></div></div>
+            <p id="context-text"></p>
+          </div>
+        </div>
+
+        <aside class="execution" aria-labelledby="h-exec">
+          <div class="exec-head">
+            <h2 id="h-exec">Esecuzione</h2>
+            <span id="exec-meta"></span>
+          </div>
+          <ol class="steps" id="steps">
+            <li class="steps-empty">Qui compaiono i nodi del grafo, le decisioni del modello e i risultati dei tool, mentre accadono.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ========================================================= previsione -->
+    <section class="view" id="view-predict" aria-labelledby="h-predict" hidden>
+      <header class="view-head">
+        <div>
+          <h1 id="h-predict">Previsione</h1>
+          <p>Il modello di machine learning da solo, senza LLM. Muovi i valori e guarda come cambia il rischio.</p>
+        </div>
+      </header>
+      <div class="predict">
+        <form class="panel predict-form" id="predict-form">
+          <label class="field">
+            <span>Parti dall'ultima lettura di</span>
+            <select id="pf-machine"><option value="">Valori liberi</option></select>
+          </label>
+          <fieldset class="field">
+            <legend>Tipo di macchina</legend>
+            <div class="segmented" role="radiogroup">
+              <label><input type="radio" name="machine_type" value="L" checked><span>L</span></label>
+              <label><input type="radio" name="machine_type" value="M"><span>M</span></label>
+              <label><input type="radio" name="machine_type" value="H"><span>H</span></label>
+            </div>
+          </fieldset>
+          <div id="pf-sliders"></div>
+        </form>
+
+        <div class="panel predict-result" id="predict-result" aria-live="polite">
+          <div class="verdict">
+            <div class="stacklight" id="pr-light" aria-hidden="true"><i class="alarm"></i><i class="warn"></i><i class="ok"></i></div>
+            <div>
+              <p class="verdict-value"><span id="pr-proba">–</span></p>
+              <p class="verdict-label" id="pr-level">probabilità di guasto</p>
+            </div>
+          </div>
+          <div class="gauge" id="pr-gauge"><div class="gauge-fill"></div><div class="gauge-mark"></div></div>
+          <p class="gauge-caption" id="pr-threshold"></p>
+          <h3>Grandezze fisiche</h3>
+          <dl class="derived" id="pr-derived"></dl>
+          <h3>Fattori di rischio</h3>
+          <ul class="factors" id="pr-factors"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================== impianto -->
+    <section class="view" id="view-plant" aria-labelledby="h-plant" hidden>
+      <header class="view-head">
+        <div>
+          <h1 id="h-plant">Impianto</h1>
+          <p>Rischio stimato dall'ultimo scoring, guasti storici e usura dell'utensile per ogni macchina.</p>
+        </div>
+      </header>
+      <div id="plant-lines"></div>
+      <div class="panel machine-detail" id="machine-detail" hidden></div>
+    </section>
+
+    <!-- =============================================================== stato -->
+    <section class="view" id="view-status" aria-labelledby="h-status" hidden>
+      <header class="view-head">
+        <div>
+          <h1 id="h-status">Stato</h1>
+          <p>Componenti, configurazione e metriche raccolte da quando l'API è avviata.</p>
+        </div>
+        <button class="btn ghost" id="refresh-status">Aggiorna</button>
+      </header>
+      <div class="status-grid" id="status-body"></div>
+    </section>
+
+    <!-- ======================================================== esperimenti -->
+    <section class="view" id="view-experiments" aria-labelledby="h-exp" hidden>
+      <header class="view-head">
+        <div>
+          <h1 id="h-exp">Esperimenti</h1>
+          <p>Ogni valutazione è salvata con la sua configurazione (modello, prompt, retriever). Scegli due run e confrontali caso per caso.</p>
+        </div>
+      </header>
+      <div class="tabs" role="tablist" id="exp-tabs">
+        <button role="tab" data-kind="agent" aria-selected="true">Agente</button>
+        <button role="tab" data-kind="retrieval" aria-selected="false">Retrieval</button>
+        <button role="tab" data-kind="guardrails" aria-selected="false">Guardrail</button>
+        <button role="tab" data-kind="model" aria-selected="false">Modello ML</button>
+      </div>
+      <div id="exp-body"></div>
+    </section>
+
+    <!-- ======================================================= monitoraggio -->
+    <section class="view" id="view-monitoring" aria-labelledby="h-mon" hidden>
+      <header class="view-head">
+        <div>
+          <h1 id="h-mon">Monitoraggio</h1>
+          <p>Drift dei dati, alert, lavori periodici, registry dei modelli, utilizzo e registro delle azioni.</p>
+        </div>
+        <button class="btn ghost" id="refresh-monitoring">Aggiorna</button>
+      </header>
+      <div id="mon-body"></div>
+    </section>
+  </main>
+</div>
+<script src="/static/app.js" type="module"></script>
+</body>
+</html>

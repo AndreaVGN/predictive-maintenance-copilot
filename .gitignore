@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Segreti
+.env
+.env.*
+!.env.example
+infra/langfuse/.env
+*.session_secret
+# compose di Langfuse scaricato da "make langfuse-up"
+infra/langfuse/docker-compose.yml
+
+# Output generati (si ricreano con "make setup")
+data/raw/*.csv
+data/raw/SOURCE.txt
+data/processed/
+artifacts/
+reports/charts/
+logs/
+backups/
+
+# Rete di sicurezza: database e modelli non vanno mai su Git
+*.db
+*.db-shm
+*.db-wal
+*.sqlite3
+*.joblib
+
+# Guida PDF e preparazione ai colloqui: restano solo in locale.
+# Dalla guida si pubblica soltanto lo screenshot usato nel README.
+docs/10-colloquio.md
+docs/guida/*
+!docs/guida/img/
+docs/guida/img/*
+!docs/guida/img/screens/
+docs/guida/img/screens/*
+!docs/guida/img/screens/copilot.png
+*.pdf
+
+# Documentazione compilata
+site/
+docs/guida/_build.html
+
+# Editor e sistema
+.DS_Store
+.vscode/
+.idea/

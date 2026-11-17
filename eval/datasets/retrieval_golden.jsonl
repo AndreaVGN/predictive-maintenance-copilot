@@ -1,0 +1,41 @@
+{"question": "Dopo quanti minuti di utilizzo l'utensile arriva a fine vita?", "expected_source": "01_twf_usura_utensile.md", "type": "semantica"}
+{"question": "Come si sostituisce l'utensile della fresatrice?", "expected_source": "01_twf_usura_utensile.md", "type": "semantica"}
+{"question": "Quali sono i segnali che l'utensile si sta consumando?", "expected_source": "01_twf_usura_utensile.md", "type": "semantica"}
+{"question": "Ogni quanto controllare l'usura sulle macchine di tipo H?", "expected_source": "01_twf_usura_utensile.md", "type": "semantica"}
+{"question": "Quando avviene il guasto per dissipazione termica?", "expected_source": "02_hdf_dissipazione_termica.md", "type": "semantica"}
+{"question": "Cosa controllare se la macchina si surriscalda a bassa velocità?", "expected_source": "02_hdf_dissipazione_termica.md", "type": "semantica"}
+{"question": "Come si pulisce lo scambiatore di calore e la ventola?", "expected_source": "02_hdf_dissipazione_termica.md", "type": "semantica"}
+{"question": "Il delta termico è sotto 8,6 K, che intervento fare?", "expected_source": "02_hdf_dissipazione_termica.md", "type": "semantica"}
+{"question": "Qual è la finestra di potenza ammessa dall'azionamento?", "expected_source": "03_pwf_potenza.md", "type": "semantica"}
+{"question": "Come si calcola la potenza meccanica da coppia e giri?", "expected_source": "03_pwf_potenza.md", "type": "semantica"}
+{"question": "La potenza è troppo bassa durante la finitura, perché?", "expected_source": "03_pwf_potenza.md", "type": "semantica"}
+{"question": "Serve il tecnico elettrico per tarare l'inverter del mandrino?", "expected_source": "03_pwf_potenza.md", "type": "semantica"}
+{"question": "Qual è il limite di usura per coppia sulle macchine di tipo M?", "expected_source": "04_osf_sovraccarico.md", "type": "semantica"}
+{"question": "Che differenza c'è tra overstrain e usura utensile?", "expected_source": "04_osf_sovraccarico.md", "type": "semantica"}
+{"question": "Come ridurre il carico di taglio per evitare il sovraccarico?", "expected_source": "04_osf_sovraccarico.md", "type": "semantica"}
+{"question": "Cosa sono i guasti casuali e si possono prevedere?", "expected_source": "05_rnf_guasti_casuali.md", "type": "semantica"}
+{"question": "Checklist di ispezione dopo un guasto senza causa evidente", "expected_source": "05_rnf_guasti_casuali.md", "type": "semantica"}
+{"question": "Come si mette in sicurezza la macchina con lucchetto e cartellino?", "expected_source": "06_sicurezza_loto.md", "type": "semantica"}
+{"question": "Quali DPI servono per la manutenzione dopo un guasto termico?", "expected_source": "06_sicurezza_loto.md", "type": "semantica"}
+{"question": "Chi è abilitato a intervenire sui quadri elettrici?", "expected_source": "06_sicurezza_loto.md", "type": "semantica"}
+{"question": "Quando si deve aprire un ordine di lavoro?", "expected_source": "07_procedura_ordini_lavoro.md", "type": "semantica"}
+{"question": "Entro quanto tempo va presa in carico una priorità P1?", "expected_source": "07_procedura_ordini_lavoro.md", "type": "semantica"}
+{"question": "Chi approva gli ordini proposti dall'assistente digitale?", "expected_source": "07_procedura_ordini_lavoro.md", "type": "semantica"}
+{"question": "Quante linee produttive ci sono e quali qualità lavorano?", "expected_source": "00_panoramica_impianto.md", "type": "semantica"}
+{"question": "Quali variabili registra il sistema di acquisizione?", "expected_source": "00_panoramica_impianto.md", "type": "semantica"}
+{"question": "Cosa significa il codice AL-207?", "expected_source": "08_codici_allarme.md", "type": "codice"}
+{"question": "Allarme AL-102 sul pannello, cosa faccio?", "expected_source": "08_codici_allarme.md", "type": "codice"}
+{"question": "Il controllo numerico mostra AL-315", "expected_source": "08_codici_allarme.md", "type": "codice"}
+{"question": "Che vuol dire AL-404?", "expected_source": "08_codici_allarme.md", "type": "codice"}
+{"question": "AL-209 sonda temperatura aria", "expected_source": "08_codici_allarme.md", "type": "codice"}
+{"question": "Cosa fare se lo stesso allarme si ripete più di tre volte nel turno?", "expected_source": "08_codici_allarme.md", "type": "semantica"}
+{"question": "Quali sono le famiglie di codici di allarme?", "expected_source": "08_codici_allarme.md", "type": "semantica"}
+{"question": "Soglia di 8,6 K", "expected_source": "02_hdf_dissipazione_termica.md", "type": "numerica"}
+{"question": "1380 rpm", "expected_source": "02_hdf_dissipazione_termica.md", "type": "numerica"}
+{"question": "limite 13000 min·Nm", "expected_source": "04_osf_sovraccarico.md", "type": "numerica"}
+{"question": "finestra 3500-9000 W", "expected_source": "03_pwf_potenza.md", "type": "numerica"}
+{"question": "probabilità 0,1% per lavorazione", "expected_source": "05_rnf_guasti_casuali.md", "type": "numerica"}
+{"question": "P3 entro 5 giorni lavorativi", "expected_source": "07_procedura_ordini_lavoro.md", "type": "numerica"}
+{"question": "2 minuti di usura per lavorazione sulle macchine L", "expected_source": "00_panoramica_impianto.md", "type": "numerica"}
+{"question": "La macchina scalda troppo quando gira piano", "expected_source": "02_hdf_dissipazione_termica.md", "type": "semantica"}
+{"question": "Il pezzo esce con bave e finitura rovinata", "expected_source": "01_twf_usura_utensile.md", "type": "semantica"}

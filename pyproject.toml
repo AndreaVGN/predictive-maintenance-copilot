@@ -1,0 +1,102 @@
+# =============================================================================
+# pyproject.toml — definizione del pacchetto Python "pmcopilot"
+#
+# Un unico file per: metadati del progetto, dipendenze, comandi da terminale,
+# configurazione di pytest e del linter (ruff). Si installa con:
+#     pip install -e ".[dev]"
+# Il flag -e ("editable") collega il pacchetto alla cartella src/: ogni modifica
+# al codice è subito attiva, senza reinstallare.
+# =============================================================================
+
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pmcopilot"
+version = "0.2.0"
+description = "Agentic RAG copilot for predictive maintenance: scikit-learn, LangGraph, FastAPI and a local LLM via Ollama"
+readme = "README.md"
+requires-python = ">=3.11,<3.15"  # 3.15: molte librerie non hanno ancora i wheel
+license = { text = "MIT" }
+authors = [{ name = "Andrea Vagnoli" }]
+
+# Dipendenze di runtime: servono per far girare dati, modello, agente e API.
+dependencies = [
+    # --- data science ---
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "matplotlib>=3.9",
+    "scikit-learn>=1.6",
+    "joblib>=1.4",
+    "tabulate>=0.9",  # tabelle Markdown da pandas (DataFrame.to_markdown)
+    # --- LLM / agente / RAG ---
+    "langchain>=1.4",
+    "langgraph>=1.2",
+    "langchain-ollama>=1.1",
+    "langchain-chroma>=1.1",
+    "langchain-text-splitters>=1.1",
+    "langgraph-checkpoint-sqlite>=2.0",  # memoria persistente delle conversazioni
+    # --- API ---
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.8",
+    "pydantic-settings>=2.6",
+    "python-dotenv>=1.0",
+    "itsdangerous>=2.1",  # firma dei cookie di sessione
+    "scipy>=1.11",  # test di Kolmogorov-Smirnov per il drift  # carica il .env nelle variabili d'ambiente (per Langfuse)
+    # --- guardrail SQL ---
+    "sqlglot>=25",
+]
+
+[project.optional-dependencies]
+# LLM via API cloud (PMC_LLM_PROVIDER=openai | anthropic).
+cloud = ["langchain-openai>=1.0", "langchain-anthropic>=1.0"]
+# Observability "da produzione" con Langfuse (opzionale: senza, il progetto
+# usa comunque il proprio tracing su file JSONL).
+observability = ["langfuse>=3"]
+# Guida PDF (make pdf): Markdown -> HTML -> PDF con Chromium.
+# Dopo l'installazione: .venv/bin/playwright install chromium
+pdf = ["markdown>=3.5", "pygments>=2.17", "pypdf>=4", "playwright>=1.45"]
+# Strumenti di sviluppo: test, linter, notebook, documentazione.
+dev = [
+    "pytest>=8",
+    "httpx>=0.27",
+    "ruff>=0.6",
+    "nbformat>=5.10",
+    "nbclient>=0.10",
+    "ipykernel>=6",
+    "mkdocs-material>=9.5",
+]
+
+# Comando da terminale: dopo l'installazione puoi scrivere "pmc setup",
+# "pmc chat", "pmc eval all" ecc. (vedi src/pmcopilot/cli.py)
+[project.scripts]
+pmc = "pmcopilot.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# File non-Python da includere nel pacchetto: la console web (HTML/CSS/JS).
+[tool.setuptools.package-data]
+pmcopilot = ["api/static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not smoke'"
+markers = [
+    "smoke: test end-to-end contro un'istanza avviata (PMC_SMOKE_URL), da lanciare dopo il deploy",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.flake8-bugbear]
+# Depends/Query nei parametri sono il modo standard di FastAPI, non un errore.
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]

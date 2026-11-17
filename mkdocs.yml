@@ -1,0 +1,53 @@
+site_name: Predictive Maintenance Copilot
+site_description: Guida al progetto, modulo per modulo
+docs_dir: docs
+# I capitoli della guida PDF hanno una sintassi propria ({{code: ...}}): non sono pagine del sito.
+exclude_docs: |
+  guida/*.md
+  guida/*.css
+theme:
+  name: material
+  language: it
+  palette:
+    - scheme: default
+      primary: blue
+      toggle: { icon: material/weather-night, name: Tema scuro }
+    - scheme: slate
+      primary: blue
+      toggle: { icon: material/weather-sunny, name: Tema chiaro }
+  features:
+    - navigation.sections
+    - navigation.footer
+    - content.code.copy
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Per iniziare: 00-setup.md
+  - Moduli:
+      - 1. Dati con pandas e numpy: 01-dati.md
+      - 2. Database e SQL: 02-sql.md
+      - 3. Modello con scikit-learn: 03-modello.md
+      - 4. RAG sui manuali: 04-rag.md
+      - 5. Agente LangChain + LangGraph: 05-agente.md
+      - 6. Guardrail: 06-guardrail.md
+      - 7. API con FastAPI: 07-api.md
+      - 8. Observability: 08-observability.md
+      - 9. Evaluation: 09-evaluation.md
+      - 11. Produzione: 11-produzione.md

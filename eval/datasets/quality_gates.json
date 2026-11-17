@@ -1,0 +1,19 @@
+{
+  "_spiegazione": "Soglie minime e cali massimi ammessi. 'pmc eval gate' fallisce (exit code 1) se una metrica è sotto il minimo o peggiora più di max_drop rispetto al run di riferimento. Usato in CI prima di un rilascio.",
+  "guardrails": {
+    "min": {"sql_detection_rate": 1.0, "input_detection_rate": 0.8},
+    "max": {"input_false_positive_rate": 0.0, "sql_false_positive_rate": 0.0}
+  },
+  "retrieval": {
+    "min": {"hit@4": 0.8, "mrr": 0.6},
+    "max_drop": {"hit@4": 0.05, "mrr": 0.05}
+  },
+  "agent": {
+    "min": {"route_accuracy": 0.9, "tool_selection_accuracy": 0.75, "pass_rate": 0.7},
+    "max": {"latency_p95_ms": 90000},
+    "max_drop": {"pass_rate": 0.1, "faithfulness_avg_1to5": 0.5}
+  },
+  "model": {
+    "min": {"pr_auc": 0.6, "recall": 0.6}
+  }
+}
