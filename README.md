@@ -4,7 +4,6 @@
 ![Python](https://img.shields.io/badge/python-3.11%E2%80%933.14-blue)
 ![LangGraph](https://img.shields.io/badge/agent-LangGraph-1c3c3c)
 ![Ollama](https://img.shields.io/badge/LLM-Ollama%20%28local%29-black)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 An agentic RAG assistant for predictive maintenance on a CNC milling plant. It combines a **scikit-learn failure model**, a **SQL plant database**, **hybrid retrieval over maintenance manuals**, and a **LangGraph agent** running on a **local LLM via Ollama** (or a cloud API). It is built like a production service: authentication and roles, usage limits, guardrails, human-in-the-loop approval, tracing, drift monitoring, a model registry, and an evaluation history with run-vs-run comparison and quality gates.
 
@@ -183,6 +182,3 @@ tests/                   # pytest suite with a fake LLM, plus smoke tests
 **Andrea Vagnoli**, M.Sc. in Artificial Intelligence and Data Engineering (University of Pisa).
 [LinkedIn](https://www.linkedin.com/in/andrea-vagnoli-303626430) · [GitHub](https://github.com/AndreaVGN)
 
-## License
-
-MIT
